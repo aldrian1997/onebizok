@@ -1713,3 +1713,66 @@ img { -webkit-user-drag: none; }
 @media (min-width: 768px) {
     .scroll-top { bottom: 26px; right: 24px; }
 }
+
+/* ===========================
+   NEW ADDITIONS: WHATSAPP & TRUST BADGES
+   =========================== */
+
+/* WhatsApp Floating Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    width: 60px;
+    height: 60px;
+    background-color: #25d366;
+    color: #fff;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 32px;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.25);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    color: #fff;
+}
+@media (max-width: 768px) {
+    .whatsapp-float {
+        bottom: 20px;
+        left: 16px;
+        width: 50px;
+        height: 50px;
+        font-size: 26px;
+    }
+}
+
+/* Trust Badges in Hero */
+.hero-trust-badges {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+.trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(5, 6, 26, 0.04);
+    border: 1px solid rgba(5, 6, 26, 0.08);
+    color: var(--text-main);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+.trust-badge i {
+    color: var(--primary);
+    font-size: 0.9rem;
+}
