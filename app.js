@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(() => showSuccessPopup(submittedName), 500);
 
                     setTimeout(() => {
-                        btnText.innerHTML = 'Lock In $100 Rate &rarr;';
+                        btnText.innerHTML = 'Lock In ₱2,500 Rate &rarr;';
                         btn.style.background = '';
                         btn.disabled = false;
                     }, 6000);
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error(result.message || 'Failed');
                 }
             } catch (err) {
-                btnText.innerHTML = 'Lock In $100 Rate &rarr;';
+                btnText.innerHTML = 'Lock In ₱2,500 Rate &rarr;';
                 btn.style.background = '';
                 btn.disabled = false;
                 if (statusEl) {
