@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await response.json();
 
                 if (result.success) {
-                    btnText.innerHTML = '<i class="fas fa-check"></i> Slot confirmed! We\'ll contact you soon.';
+                    btnText.innerHTML = '<i class="fas fa-check"></i> Request received!';
                     btn.style.background = 'linear-gradient(135deg,#06d6a0,#059669)';
                     form.reset();
 
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.style.background = '';
                 btn.disabled = false;
                 if (statusEl) {
-                    statusEl.textContent = 'Something went wrong. Please email us at hello@onebizok.com';
+                    statusEl.textContent = 'Something went wrong. Please connect with us via WhatsApp.';
                     statusEl.className = 'form-status error';
                     setTimeout(() => { statusEl.className = 'form-status'; statusEl.textContent = ''; }, 7000);
                 }
@@ -228,36 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // =========================================
-    // 11. CUSTOM CURSOR - Desktop only
-    // =========================================
-    if (!isMobile) {
-        const dot = document.querySelector('.cursor-dot');
-        const ring = document.querySelector('.cursor-ring');
-        if (dot && ring) {
-            let mx = 0, my = 0, rx = 0, ry = 0;
-            document.addEventListener('mousemove', e => {
-                mx = e.clientX; my = e.clientY;
-                dot.style.left = mx + 'px';
-                dot.style.top = my + 'px';
-            });
-            (function animRing() {
-                rx += (mx - rx) * 0.12;
-                ry += (my - ry) * 0.12;
-                ring.style.left = rx + 'px';
-                ring.style.top = ry + 'px';
-                requestAnimationFrame(animRing);
-            })();
-            document.querySelectorAll('a, button, .obo-portfolio-item, .faq-question, .filter-btn').forEach(el => {
-                el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
-                el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
-            });
-            document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
-            document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
-        }
-    }
-
-    // =========================================
-    // 12. FLOATING ORBS - Desktop only, low frequency
+    // 11. FLOATING ORBS - Desktop only, low frequency
     // =========================================
     if (!isMobile) {
         const orbColors = ['rgba(79,70,229,0.4)', 'rgba(247,37,133,0.4)', 'rgba(6,214,160,0.4)', 'rgba(124,58,237,0.4)'];
@@ -291,7 +262,7 @@ function showSuccessPopup(name) {
 
     const firstName = (name && name.trim()) ? name.trim().split(' ')[0] : 'there';
     document.getElementById('successPopupTitle').textContent = 'Hello, ' + firstName + '!';
-    document.getElementById('successPopupMsg').textContent = 'We have received your request. Our team will contact you shortly to confirm your slot and get things started.';
+    document.getElementById('successPopupMsg').textContent = 'Your slot is confirmed! We will send you the requirements and the invoice shortly to get things started.';
     document.getElementById('successSlotText').textContent = 'Slots are limited. Thank you for securing yours.';
 
     popup.classList.add('show');
