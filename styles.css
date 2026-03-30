@@ -559,31 +559,36 @@ img { -webkit-user-drag: none; }
 .hero-scroll-indicator { display: none; }
 
 /* ===========================
-   MARQUEE
+   INFINITE MARQUEE
    =========================== */
 .obo-marquee-wrapper {
     background: var(--grad-main);
     overflow: hidden;
     padding: 12px 0;
 }
-.obo-marquee { display: flex; overflow: hidden; }
-.marquee-track {
+.obo-marquee {
     display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.marquee-content {
+    display: flex;
+    flex-shrink: 0;
     align-items: center;
     gap: 16px;
-    white-space: nowrap;
-    animation: marqueeScroll 28s linear infinite;
     padding-right: 16px;
+    animation: scrollMarquee 20s linear infinite;
     font-size: 0.7rem;
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: white;
 }
-.marquee-track .sep { color: rgba(255,255,255,0.4); font-size: 0.5rem; }
-@keyframes marqueeScroll {
+.marquee-content .sep { color: rgba(255,255,255,0.4); font-size: 0.5rem; }
+
+@keyframes scrollMarquee {
     from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+    to   { transform: translateX(-100%); }
 }
 
 /* ===========================
