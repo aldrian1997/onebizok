@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRONFORM — Premium Gym Equipment</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0eb;
+    --red: #e8290b;
+    --gray: #1a1a1a;
+    --muted: #6b6b6b;
+    --border: rgba(245,240,235,0.1);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 3rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.1em; color: var(--white); }
+  .logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--white); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s; }
+  .nav-links a:hover { opacity: 1; }
+  .nav-cta {
+    background: var(--red); color: var(--white);
+    border: none; padding: 0.6rem 1.5rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+    letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
+    cursor: default;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(232,41,11,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 3rem 6rem 4rem;
+    position: relative; z-index: 2;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 1.5rem;
+  }
+  .hero-tag::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--red); }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 7vw, 7.5rem);
+    line-height: 0.93;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.8rem;
+  }
+  h1 em { color: var(--red); font-style: normal; }
+  .hero-desc {
+    font-size: 1rem; line-height: 1.75; color: rgba(245,240,235,0.6);
+    max-width: 400px; margin-bottom: 2.8rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; }
+  .btn-primary {
+    background: var(--red); color: var(--white);
+    border: none; padding: 1rem 2.4rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+    letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;
+    cursor: default;
+    position: relative; overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .btn-primary::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(255,255,255,0.1);
+    transform: translateX(-100%); transition: transform 0.3s;
+  }
+  .btn-primary:hover::after { transform: translateX(0); }
+  .btn-secondary {
+    color: var(--white); font-size: 0.85rem; letter-spacing: 0.1em;
+    text-transform: uppercase; opacity: 0.55;
+    display: flex; align-items: center; gap: 0.5rem;
+    cursor: default;
+  }
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 2.5rem; border-top: 1px solid var(--border);
+  }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; color: var(--white); }
+  .stat-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+  }
+  .hero-right img {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.8;
+    filter: contrast(1.1) saturate(0.9);
+  }
+  .hero-right::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, var(--black) 0%, transparent 30%),
+                linear-gradient(to top, var(--black) 0%, transparent 40%);
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow: hidden; background: var(--red);
+    padding: 0.9rem 0; white-space: nowrap;
+  }
+  .marquee-inner { display: inline-flex; animation: marquee 20s linear infinite; }
+  .marquee-inner span {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+    letter-spacing: 0.15em; padding: 0 2.5rem; color: var(--white);
+    opacity: 0.85;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* PRODUCTS */
+  .section { padding: 7rem 4rem; }
+  .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 4rem; }
+  .section-label { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 0.8rem; }
+  h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 4vw, 4rem); line-height: 1; }
+  .view-all { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); cursor: default; border-bottom: 1px solid var(--muted); padding-bottom: 2px; }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+  }
+  .product-card {
+    background: var(--gray);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    group: true;
+    transition: transform 0.3s;
+  }
+  .product-card:hover .product-img img { transform: scale(1.05); }
+  .product-img { aspect-ratio: 4/3; overflow: hidden; position: relative; }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; filter: grayscale(20%); }
+  .product-badge {
+    position: absolute; top: 1rem; left: 1rem;
+    background: var(--red); color: var(--white);
+    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.3rem 0.6rem; font-weight: 600;
+  }
+  .product-info { padding: 1.5rem; }
+  .product-category { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+  .product-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.05em; margin-bottom: 0.8rem; }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price { font-size: 1.1rem; font-weight: 600; }
+  .product-price .old { font-size: 0.85rem; color: var(--muted); text-decoration: line-through; margin-right: 0.5rem; }
+  .add-btn {
+    background: transparent; border: 1px solid rgba(245,240,235,0.2);
+    color: var(--white); padding: 0.5rem 1rem;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: default; transition: all 0.2s;
+  }
+  .add-btn:hover { background: var(--red); border-color: var(--red); }
+
+  /* FEATURE STRIP */
+  .feature-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .feature-item {
+    padding: 3rem 2.5rem;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .feature-item:last-child { border-right: none; }
+  .feature-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .feature-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .feature-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+
+  /* PROMO BANNER */
+  .promo-banner {
+    margin: 0 4rem;
+    position: relative; overflow: hidden;
+    min-height: 420px;
+    display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+  }
+  .promo-bg {
+    position: absolute; inset: 0;
+    background: var(--gray);
+    z-index: 0;
+  }
+  .promo-img {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 55%;
+    z-index: 1;
+  }
+  .promo-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+  .promo-img::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to right, var(--gray) 20%, transparent 80%);
+    z-index: 2;
+  }
+  .promo-content {
+    position: relative; z-index: 3; padding: 4rem;
+  }
+  .promo-tag { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 1rem; }
+  .promo-title { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; line-height: 1; margin-bottom: 1.2rem; }
+  .promo-desc { font-size: 0.9rem; color: rgba(245,240,235,0.6); line-height: 1.8; max-width: 360px; margin-bottom: 2rem; }
+  .promo-timer { display: flex; gap: 1.5rem; margin-bottom: 2rem; }
+  .timer-box { text-align: center; }
+  .timer-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; line-height: 1; color: var(--red); }
+  .timer-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+
+  /* TESTIMONIALS */
+  .testimonials { padding: 7rem 4rem; background: var(--gray); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem; }
+  .review-card {
+    background: var(--black); padding: 2rem;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .review-stars { color: var(--red); font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 0.2em; }
+  .review-text { font-size: 0.9rem; line-height: 1.8; color: rgba(245,240,235,0.7); margin-bottom: 1.5rem; font-style: italic; }
+  .review-author { display: flex; align-items: center; gap: 0.8rem; }
+  .review-avatar { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; filter: grayscale(40%); }
+  .review-name { font-size: 0.85rem; font-weight: 600; }
+  .review-handle { font-size: 0.75rem; color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    padding: 4rem; border-top: 1px solid var(--border);
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+  .footer-brand .logo { display: block; margin-bottom: 1rem; }
+  .footer-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.8; max-width: 260px; }
+  .footer-col h4 { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.2rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .footer-bottom {
+    padding: 1.5rem 4rem; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em;
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .d1 { animation-delay: 0.1s; } .d2 { animation-delay: 0.25s; }
+  .d3 { animation-delay: 0.4s; } .d4 { animation-delay: 0.55s; }
+  .d5 { animation-delay: 0.7s; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { height: 40vh; }
+    .hero-left { padding: 3rem 1.5rem; }
+    .products-grid { grid-template-columns: 1fr; }
+    .feature-strip { grid-template-columns: 1fr 1fr; }
+    .promo-banner { margin: 0 1.5rem; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr 1fr; padding: 3rem 1.5rem; }
+    .section { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">IRON<span>FORM</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Equipment</a></li>
+    <li><a href="#">Nutrition</a></li>
+    <li><a href="#">Apparel</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <button class="nav-cta">Shop Now</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag fade-up d1">New Collection 2025</div>
+    <h1 class="fade-up d2">BUILT TO<br><em>BREAK</em><br>LIMITS</h1>
+    <p class="hero-desc fade-up d3">Professional-grade gym equipment engineered for athletes who refuse to settle. From home setups to commercial gym floors.</p>
+    <div class="hero-actions fade-up d4">
+      <button class="btn-primary">Explore Collection</button>
+      <span class="btn-secondary">Watch Film →</span>
+    </div>
+    <div class="hero-stats fade-up d5">
+      <div>
+        <div class="stat-num">12K+</div>
+        <div class="stat-label">Athletes</div>
+      </div>
+      <div>
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Satisfaction</div>
+      </div>
+      <div>
+        <div class="stat-num">5★</div>
+        <div class="stat-label">Rated</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1000&q=80" alt="Gym Equipment">
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner" id="marquee">
+    <span>FREE SHIPPING OVER $150</span><span>•</span>
+    <span>COMMERCIAL GRADE STEEL</span><span>•</span>
+    <span>LIFETIME WARRANTY</span><span>•</span>
+    <span>30-DAY RETURNS</span><span>•</span>
+    <span>NEW: CARBON PRO SERIES</span><span>•</span>
+    <span>FREE SHIPPING OVER $150</span><span>•</span>
+    <span>COMMERCIAL GRADE STEEL</span><span>•</span>
+    <span>LIFETIME WARRANTY</span><span>•</span>
+    <span>30-DAY RETURNS</span><span>•</span>
+    <span>NEW: CARBON PRO SERIES</span><span>•</span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Best Sellers</div>
+      <h2>TOP PICKS</h2>
+    </div>
+    <span class="view-all">View All →</span>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=700&q=80" alt="Barbell">
+        <span class="product-badge">New</span>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Barbells</div>
+        <div class="product-name">CARBON PRO BARBELL</div>
+        <div class="product-footer">
+          <div class="product-price">$349</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=700&q=80" alt="Dumbbells">
+        <span class="product-badge">Sale</span>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Free Weights</div>
+        <div class="product-name">HEX DUMBBELL SET</div>
+        <div class="product-footer">
+          <div class="product-price"><span class="old">$420</span>$289</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=700&q=80" alt="Bench">
+      </div>
+      <div class="product-info">
+        <div class="product-category">Benches</div>
+        <div class="product-name">ADJUSTABLE FLAT BENCH</div>
+        <div class="product-footer">
+          <div class="product-price">$199</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<div class="feature-strip">
+  <div class="feature-item">
+    <div class="feature-icon">⚙️</div>
+    <div class="feature-title">PRECISION ENGINEERING</div>
+    <div class="feature-desc">Every piece is machined to ±0.01mm tolerance. Built to outperform the competition.</div>
+  </div>
+  <div class="feature-item">
+    <div class="feature-icon">🛡️</div>
+    <div class="feature-title">LIFETIME WARRANTY</div>
+    <div class="feature-desc">We stand behind every product we make. No expiry, no fine print, no excuses.</div>
+  </div>
+  <div class="feature-item">
+    <div class="feature-icon">🚚</div>
+    <div class="feature-title">FREE DELIVERY</div>
+    <div class="feature-desc">White-glove delivery and setup included on orders over $500 in the metro area.</div>
+  </div>
+  <div class="feature-item">
+    <div class="feature-icon">🔁</div>
+    <div class="feature-title">30-DAY RETURNS</div>
+    <div class="feature-desc">Try it for a month. If it's not right, we'll pick it up and refund you in full.</div>
+  </div>
+</div>
+
+<!-- PROMO BANNER -->
+<section class="section" style="padding-top: 5rem; padding-bottom: 5rem;">
+  <div class="promo-banner">
+    <div class="promo-bg"></div>
+    <div class="promo-img">
+      <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800&q=80" alt="Promo">
+    </div>
+    <div class="promo-content">
+      <div class="promo-tag">⚡ Limited Offer</div>
+      <div class="promo-title">SUMMER<br>POWER<br>DROP</div>
+      <p class="promo-desc">Complete home gym bundles at 35% off. Everything you need to train hard, recover faster, and never miss a rep.</p>
+      <div class="promo-timer">
+        <div class="timer-box">
+          <div class="timer-num" id="hours">08</div>
+          <div class="timer-label">Hrs</div>
+        </div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;padding-top:4px;color:var(--muted);">:</div>
+        <div class="timer-box">
+          <div class="timer-num" id="mins">34</div>
+          <div class="timer-label">Min</div>
+        </div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;padding-top:4px;color:var(--muted);">:</div>
+        <div class="timer-box">
+          <div class="timer-num" id="secs">00</div>
+          <div class="timer-label">Sec</div>
+        </div>
+      </div>
+      <button class="btn-primary">Claim Deal</button>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Reviews</div>
+      <h2>WHAT ATHLETES SAY</h2>
+    </div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"The Carbon Pro Barbell is an absolute beast. Knurling is perfect, finish is flawless. This thing will outlast my gym career."</p>
+      <div class="review-author">
+        <img class="review-avatar" src="https://i.pravatar.cc/80?img=12" alt="avatar">
+        <div>
+          <div class="review-name">Marcus T.</div>
+          <div class="review-handle">Powerlifter · 6 yrs</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Ordered the full dumbbell set. Delivery was fast, packaging was insane, and the quality is commercial-grade. Worth every penny."</p>
+      <div class="review-author">
+        <img class="review-avatar" src="https://i.pravatar.cc/80?img=32" alt="avatar">
+        <div>
+          <div class="review-name">Jade R.</div>
+          <div class="review-handle">CrossFit Athlete</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Built my entire home gym with IRONFORM. Setup service was seamless and everything is rock solid. This brand is the real deal."</p>
+      <div class="review-author">
+        <img class="review-avatar" src="https://i.pravatar.cc/80?img=59" alt="avatar">
+        <div>
+          <div class="review-name">Dean K.</div>
+          <div class="review-handle">Home Gym Builder</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="logo">IRON<span style="color:var(--red)">FORM</span></div>
+    <p class="footer-desc">Premium gym equipment for serious athletes. Built without compromise, backed by science.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Shop</h4>
+    <ul>
+      <li>Barbells</li>
+      <li>Dumbbells</li>
+      <li>Benches</li>
+      <li>Racks</li>
+      <li>Accessories</li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Support</h4>
+    <ul>
+      <li>FAQ</li>
+      <li>Returns</li>
+      <li>Track Order</li>
+      <li>Warranty</li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Company</h4>
+    <ul>
+      <li>About Us</li>
+      <li>Blog</li>
+      <li>Athletes</li>
+      <li>Contact</li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2025 IRONFORM. All rights reserved.</span>
+  <span>Privacy · Terms · Cookies</span>
+</div>
+
+<script>
+  // Countdown timer
+  let total = 8 * 3600 + 34 * 60;
+  const h = document.getElementById('hours');
+  const m = document.getElementById('mins');
+  const s = document.getElementById('secs');
+  function pad(n) { return String(n).padStart(2, '0'); }
+  setInterval(() => {
+    if (total <= 0) return;
+    total--;
+    h.textContent = pad(Math.floor(total / 3600));
+    m.textContent = pad(Math.floor((total % 3600) / 60));
+    s.textContent = pad(total % 60);
+  }, 1000);
+
+  // Scroll fade-in for product cards
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.product-card, .review-card, .feature-item').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = `opacity 0.6s ease ${i * 0.08}s, transform 0.6s ease ${i * 0.08}s`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

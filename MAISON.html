@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAISON — Home & Living</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FAF8F4;
+    --clay: #C4A882;
+    --dark-clay: #8B6E4E;
+    --earth: #2C231A;
+    --muted: #7A6F65;
+    --sage: #8A9E8C;
+    --rust: #B85C38;
+    --border: rgba(44,35,26,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--earth);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--earth);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, background 0.2s;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--earth);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s ease, width 0.25s, height 0.25s, opacity 0.25s;
+    transform: translate(-50%, -50%);
+    opacity: 0.4;
+  }
+  a:hover ~ .cursor-ring, button:hover ~ .cursor-ring { width: 60px; height: 60px; }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 3rem;
+    background: rgba(250,248,244,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: padding 0.3s ease;
+  }
+  nav.scrolled { padding: 1rem 3rem; }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--earth);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--earth); }
+
+  .nav-actions { display: flex; align-items: center; gap: 1.5rem; }
+  .cart-btn {
+    position: relative;
+    background: none; border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--earth);
+    cursor: none;
+    padding: 0.6rem 1.4rem;
+    border: 1px solid var(--earth);
+    transition: background 0.25s, color 0.25s;
+  }
+  .cart-btn:hover { background: var(--earth); color: var(--warm-white); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5rem 4rem 5rem 3rem;
+    position: relative;
+  }
+
+  .hero-tag {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 32px; height: 1px;
+    background: var(--clay);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--earth);
+    margin-bottom: 2rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--dark-clay);
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 360px;
+    margin-bottom: 3rem;
+  }
+
+  .hero-actions { display: flex; align-items: center; gap: 2rem; }
+  .btn-primary {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: var(--earth);
+    color: var(--warm-white);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.25s, transform 0.2s;
+    cursor: none;
+  }
+  .btn-primary:hover { background: var(--dark-clay); transform: translateY(-1px); }
+
+  .btn-ghost {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--earth);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: gap 0.2s;
+    cursor: none;
+  }
+  .btn-ghost:hover { gap: 1rem; }
+  .btn-ghost::after { content: '→'; }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-right img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 8s ease;
+  }
+  .hero-right:hover img { transform: scale(1.04); }
+
+  .hero-badge {
+    position: absolute;
+    bottom: 2.5rem; left: -3rem;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    padding: 1.2rem 1.5rem;
+    width: 160px;
+    transform: rotate(-2deg);
+    box-shadow: 4px 4px 0 rgba(44,35,26,0.06);
+  }
+  .hero-badge-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1;
+  }
+  .hero-badge-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  /* Marquee */
+  .marquee-wrap {
+    background: var(--earth);
+    color: var(--cream);
+    padding: 0.85rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-flex;
+    animation: marquee 22s linear infinite;
+  }
+  .marquee-inner span {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0 2.5rem;
+  }
+  .marquee-inner span.dot::before {
+    content: '✦';
+    color: var(--clay);
+    margin-right: 2.5rem;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* Featured Product */
+  .product-section {
+    padding: 7rem 3rem;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .product-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 340px 200px;
+    gap: 12px;
+  }
+
+  .product-images .img-main {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    overflow: hidden;
+  }
+  .product-images .img-side { overflow: hidden; }
+  .product-images img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .product-images .img-main:hover img,
+  .product-images .img-side:hover img { transform: scale(1.06); }
+
+  .product-info {}
+  .product-category {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 1rem;
+  }
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .product-desc {
+    font-size: 0.9rem;
+    line-height: 1.85;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    border-left: 2px solid var(--clay);
+    padding-left: 1.2rem;
+  }
+
+  .product-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 2.5rem;
+  }
+  .detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.9rem;
+    background: var(--cream);
+    border: 1px solid var(--border);
+  }
+  .detail-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .detail-val {
+    font-size: 0.88rem;
+    color: var(--earth);
+    font-weight: 500;
+  }
+
+  .product-price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+  }
+  .price-note {
+    font-size: 0.75rem;
+    color: var(--sage);
+    letter-spacing: 0.08em;
+  }
+
+  .add-cart {
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--earth);
+    color: var(--warm-white);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: background 0.25s, transform 0.15s;
+    margin-bottom: 0.75rem;
+  }
+  .add-cart:hover { background: var(--rust); transform: translateY(-1px); }
+
+  .wishlist-btn {
+    width: 100%;
+    padding: 0.9rem;
+    background: none;
+    border: 1px solid var(--border);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .wishlist-btn:hover { border-color: var(--clay); color: var(--clay); }
+
+  /* Grid Collection */
+  .collection-section {
+    padding: 5rem 3rem;
+    background: var(--cream);
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+  }
+  .section-link {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: color 0.2s, gap 0.2s;
+    cursor: none;
+  }
+  .section-link:hover { color: var(--earth); gap: 1rem; }
+  .section-link::after { content: '→'; }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .product-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+  }
+  .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(44,35,26,0.1); }
+
+  .card-img {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+  }
+  .card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .product-card:hover .card-img img { transform: scale(1.08); }
+
+  .card-badge {
+    position: absolute;
+    top: 1rem; left: 1rem;
+    background: var(--rust);
+    color: #fff;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.7rem;
+  }
+
+  .card-body {
+    padding: 1.2rem;
+  }
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+  }
+  .card-material {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.8rem;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+  }
+  .card-btn {
+    width: 36px; height: 36px;
+    background: var(--earth);
+    color: var(--warm-white);
+    border: none;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    cursor: none;
+    transition: background 0.2s;
+  }
+  .card-btn:hover { background: var(--rust); }
+
+  /* Story Banner */
+  .story-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 60vh;
+  }
+  .story-img {
+    overflow: hidden;
+  }
+  .story-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+  .story-img:hover img { transform: scale(1.04); }
+
+  .story-content {
+    background: var(--earth);
+    color: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5rem 4rem;
+  }
+  .story-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 1.5rem;
+  }
+  .story-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    color: #FAF8F4;
+  }
+  .story-text {
+    font-size: 0.88rem;
+    line-height: 1.9;
+    color: rgba(245,240,232,0.65);
+    margin-bottom: 2.5rem;
+  }
+  .btn-outline-light {
+    display: inline-block;
+    padding: 0.9rem 2rem;
+    border: 1px solid rgba(245,240,232,0.4);
+    color: var(--cream);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.25s, border-color 0.25s;
+    cursor: none;
+    align-self: flex-start;
+  }
+  .btn-outline-light:hover {
+    background: rgba(245,240,232,0.1);
+    border-color: var(--cream);
+  }
+
+  /* Testimonials */
+  .testimonials {
+    padding: 6rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .testimonials .section-header { margin-bottom: 3.5rem; }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .testimonial-card {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    background: var(--cream);
+    position: relative;
+  }
+  .testimonial-card::before {
+    content: '\201C';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    color: var(--clay);
+    opacity: 0.3;
+    position: absolute;
+    top: 0.5rem; left: 1.2rem;
+    line-height: 1;
+  }
+  .testimonial-text {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    padding-top: 1rem;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .author-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+  }
+  .author-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .author-loc {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+  .stars {
+    color: var(--clay);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  /* Newsletter */
+  .newsletter {
+    background: var(--cream);
+    padding: 5rem 3rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .newsletter-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 300;
+    margin-bottom: 0.75rem;
+  }
+  .newsletter-sub {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+  }
+  .newsletter-form {
+    display: flex;
+    max-width: 480px;
+    margin: 0 auto;
+    gap: 0;
+    border: 1px solid var(--earth);
+  }
+  .newsletter-form input {
+    flex: 1;
+    padding: 0.9rem 1.2rem;
+    background: var(--warm-white);
+    border: none;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--earth);
+  }
+  .newsletter-form input::placeholder { color: var(--muted); }
+  .newsletter-form button {
+    padding: 0.9rem 1.5rem;
+    background: var(--earth);
+    color: var(--warm-white);
+    border: none;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: none;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .newsletter-form button:hover { background: var(--dark-clay); }
+
+  /* Footer */
+  footer {
+    padding: 4rem 3rem 2rem;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+    display: block;
+    text-decoration: none;
+    color: var(--earth);
+  }
+  .footer-desc {
+    font-size: 0.83rem;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 240px;
+  }
+  .footer-col-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--earth);
+    margin-bottom: 1.2rem;
+    font-weight: 500;
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 0.65rem; }
+  .footer-links a {
+    font-size: 0.83rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: none;
+  }
+  .footer-links a:hover { color: var(--earth); }
+
+  .footer-bottom {
+    padding: 1.5rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-copy {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* Animations */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    background: var(--earth);
+    color: var(--cream);
+    padding: 1rem 1.5rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 500;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 50vh; }
+    .hero-badge { left: 1rem; }
+    .product-section { grid-template-columns: 1fr; padding: 4rem 1.5rem; }
+    .collection-section { padding: 4rem 1.5rem; }
+    .product-grid { grid-template-columns: 1fr 1fr; }
+    .story-section { grid-template-columns: 1fr; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr 1fr; padding: 3rem 1.5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast">✓ Added to cart</div>
+
+<!-- Nav -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">MAISON</a>
+  <ul class="nav-links">
+    <li><a href="#">Living</a></li>
+    <li><a href="#">Bedroom</a></li>
+    <li><a href="#">Kitchen</a></li>
+    <li><a href="#">Outdoor</a></li>
+    <li><a href="#">New In</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="cart-btn" onclick="showToast('Cart opened')">Bag (0)</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">New Collection 2025</p>
+    <h1 class="hero-title">
+      Where every space<br>tells <em>your</em> story
+    </h1>
+    <p class="hero-desc">
+      Thoughtfully crafted pieces for a life lived beautifully. From artisan ceramics to hand-woven textiles — every detail matters.
+    </p>
+    <div class="hero-actions">
+      <a href="#collection" class="btn-primary">Shop Collection</a>
+      <a href="#story" class="btn-ghost">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=80" alt="Elegant living room interior">
+    <div class="hero-badge">
+      <div class="hero-badge-num">340+</div>
+      <div class="hero-badge-label">Curated Pieces</div>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span>Free shipping over $150</span><span class="dot">Handcrafted materials</span><span>Sustainable sourcing</span><span class="dot">30-day returns</span><span>Artisan workshops</span><span class="dot">New arrivals weekly</span>
+    <span>Free shipping over $150</span><span class="dot">Handcrafted materials</span><span>Sustainable sourcing</span><span class="dot">30-day returns</span><span>Artisan workshops</span><span class="dot">New arrivals weekly</span>
+  </div>
+</div>
+
+<!-- Featured Product -->
+<section class="product-section fade-in">
+  <div class="product-images">
+    <div class="img-main">
+      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt="Linen sofa main view">
+    </div>
+    <div class="img-side">
+      <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&q=80" alt="Sofa detail">
+    </div>
+    <div class="img-side">
+      <img src="https://images.unsplash.com/photo-1567538096621-38d2284b23ff?w=400&q=80" alt="Room context">
+    </div>
+  </div>
+
+  <div class="product-info">
+    <p class="product-category">★ Staff Favourite — Seating</p>
+    <h2 class="product-name">Alma Linen<br>Sofa, Oat</h2>
+    <p class="product-desc">
+      Belgian linen meets natural oak. Lovingly assembled by our workshop partners in Porto, each Alma takes 48 hours of craft to complete. Naturally stain-resistant and pre-washed for that lived-in softness from day one.
+    </p>
+    <div class="product-details">
+      <div class="detail-item">
+        <span class="detail-label">Material</span>
+        <span class="detail-val">Belgian Linen</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Frame</span>
+        <span class="detail-val">Solid Oak</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Dimensions</span>
+        <span class="detail-val">220 × 90 × 78cm</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Lead time</span>
+        <span class="detail-val">4–6 weeks</span>
+      </div>
+    </div>
+    <div class="product-price-row">
+      <div class="price">$2,890</div>
+      <span class="price-note">Interest-free installments available</span>
+    </div>
+    <button class="add-cart" onclick="showToast('Alma Linen Sofa added to cart ✓')">Add to Bag</button>
+    <button class="wishlist-btn">Save to Wishlist</button>
+  </div>
+</section>
+
+<!-- Collection Grid -->
+<section class="collection-section" id="collection">
+  <div class="section-header">
+    <h2 class="section-title">New Arrivals</h2>
+    <a href="#" class="section-link">View all</a>
+  </div>
+  <div class="product-grid">
+    <div class="product-card fade-in">
+      <div class="card-img">
+        <img src="https://images.unsplash.com/photo-1602872029708-84d970d3382f?w=500&q=80" alt="Ceramic vase">
+        <span class="card-badge">New</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Studio Ceramic Vase</div>
+        <div class="card-material">Stoneware · Sage glaze</div>
+        <div class="card-footer">
+          <span class="card-price">$148</span>
+          <button class="card-btn" onclick="showToast('Ceramic Vase added to cart ✓')">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card fade-in">
+      <div class="card-img">
+        <img src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?w=500&q=80" alt="Woven throw">
+      </div>
+      <div class="card-body">
+        <div class="card-name">Woven Merino Throw</div>
+        <div class="card-material">100% Merino · Ivory</div>
+        <div class="card-footer">
+          <span class="card-price">$220</span>
+          <button class="card-btn" onclick="showToast('Merino Throw added to cart ✓')">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card fade-in">
+      <div class="card-img">
+        <img src="https://images.unsplash.com/photo-1517705008128-361805f42e86?w=500&q=80" alt="Walnut side table">
+        <span class="card-badge">Low stock</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Walnut Side Table</div>
+        <div class="card-material">Solid walnut · Oiled finish</div>
+        <div class="card-footer">
+          <span class="card-price">$495</span>
+          <button class="card-btn" onclick="showToast('Walnut Table added to cart ✓')">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Story -->
+<section class="story-section fade-in" id="story">
+  <div class="story-img">
+    <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80" alt="Artisan workshop">
+  </div>
+  <div class="story-content">
+    <p class="story-eyebrow">Our Philosophy</p>
+    <h2 class="story-title">Crafted with intention.<br>Made to last lifetimes.</h2>
+    <p class="story-text">
+      We believe your home should be a reflection of who you are — not a catalogue page. Every piece in our collection is ethically sourced from small workshops across Europe and Japan, where generations of craft meet modern design sensibilities.
+      <br><br>
+      No fast furniture. No compromises. Just objects worth inheriting.
+    </p>
+    <a href="#" class="btn-outline-light">Read our story</a>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials fade-in">
+  <div class="section-header">
+    <h2 class="section-title">Loved by our community</h2>
+    <a href="#" class="section-link">All reviews</a>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">The Alma sofa arrived and I genuinely teared up. It's exactly what I envisioned for my living room. The linen feels so luxurious yet durable with my two cats.</p>
+      <div class="testimonial-author">
+        <img class="author-avatar" src="https://i.pravatar.cc/80?img=47" alt="Sofia M.">
+        <div>
+          <div class="author-name">Sofia M.</div>
+          <div class="author-loc">Copenhagen, DK</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">I've furnished my entire apartment through MAISON over two years. The quality is unmatched — my walnut table looks better now than when it arrived.</p>
+      <div class="testimonial-author">
+        <img class="author-avatar" src="https://i.pravatar.cc/80?img=12" alt="James R.">
+        <div>
+          <div class="author-name">James R.</div>
+          <div class="author-loc">New York, US</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">The ceramic vases are art pieces in their own right. I love knowing exactly where they came from and who made them. That transparency is everything.</p>
+      <div class="testimonial-author">
+        <img class="author-avatar" src="https://i.pravatar.cc/80?img=32" alt="Mei L.">
+        <div>
+          <div class="author-name">Mei L.</div>
+          <div class="author-loc">Melbourne, AU</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter fade-in">
+  <h2 class="newsletter-title">Join the inner circle</h2>
+  <p class="newsletter-sub">New arrivals, studio visits, and early access. No clutter, just beauty.</p>
+  <div class="newsletter-form">
+    <input type="email" placeholder="your@email.com">
+    <button onclick="showToast('Welcome to MAISON ✓')">Subscribe</button>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div>
+    <a class="footer-logo" href="#">MAISON</a>
+    <p class="footer-desc">Beautiful objects for intentional living. Thoughtfully sourced from small workshops around the world.</p>
+  </div>
+  <div>
+    <p class="footer-col-title">Shop</p>
+    <ul class="footer-links">
+      <li><a href="#">New Arrivals</a></li>
+      <li><a href="#">Living Room</a></li>
+      <li><a href="#">Bedroom</a></li>
+      <li><a href="#">Kitchen & Dining</a></li>
+      <li><a href="#">Outdoor</a></li>
+    </ul>
+  </div>
+  <div>
+    <p class="footer-col-title">Help</p>
+    <ul class="footer-links">
+      <li><a href="#">Shipping & Returns</a></li>
+      <li><a href="#">Care Guides</a></li>
+      <li><a href="#">Trade Program</a></li>
+      <li><a href="#">FAQ</a></li>
+    </ul>
+  </div>
+  <div>
+    <p class="footer-col-title">Company</p>
+    <ul class="footer-links">
+      <li><a href="#">Our Story</a></li>
+      <li><a href="#">Sustainability</a></li>
+      <li><a href="#">Makers</a></li>
+      <li><a href="#">Press</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span class="footer-copy">© 2025 MAISON. All rights reserved.</span>
+  <span class="footer-copy">Crafted with care.</span>
+</div>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+  });
+
+  (function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) *.12;
+    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+    requestAnimationFrame(animRing);
+  })();
+
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Fade-in on scroll
+  const faders = document.querySelectorAll('.fade-in');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  faders.forEach(el => obs.observe(el));
+
+  // Toast
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2600);
+  }
+</script>
+</body>
+</html>

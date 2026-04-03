@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buhay Roofing Solutions – Trusted Roofing in the Philippines</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0d1f3c;
+      --navy2:  #162847;
+      --orange: #f47c20;
+      --orange2:#e06910;
+      --gray:   #f4f6f9;
+      --gray2:  #dce3ed;
+      --text:   #1a2a45;
+      --muted:  #5e728a;
+      --white:  #ffffff;
+      --radius: 14px;
+      --shadow: 0 8px 32px rgba(13,31,60,.10);
+      --shadow-lg: 0 16px 48px rgba(13,31,60,.16);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── UTILITIES ───────────────────────────────── */
+    .container { width: min(100%, 1160px); margin-inline: auto; padding-inline: 1.25rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .85rem 2rem; border-radius: 50px; font-family: 'Montserrat', sans-serif;
+      font-weight: 700; font-size: .95rem; letter-spacing: .03em;
+      cursor: pointer; text-decoration: none; border: none; transition: all .25s;
+    }
+    .btn-primary { background: var(--orange); color: #fff; }
+    .btn-primary:hover { background: var(--orange2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(244,124,32,.35); }
+    .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.6); }
+    .btn-outline:hover { background: rgba(255,255,255,.12); border-color: #fff; }
+    .section-label {
+      display: inline-block; font-family: 'Montserrat', sans-serif;
+      font-size: .75rem; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--orange);
+      padding: .35rem .9rem; background: rgba(244,124,32,.1); border-radius: 50px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.75rem, 3.5vw, 2.6rem); font-weight: 800;
+      color: var(--navy); line-height: 1.2; margin-bottom: 1rem;
+    }
+    .section-sub { font-size: .98rem; color: var(--muted); line-height: 1.8; max-width: 560px; }
+
+    /* ── FADE-IN ANIMATION ───────────────────────── */
+    .fade-in { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ── NAVBAR ──────────────────────────────────── */
+    #navbar {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      padding: 1.1rem 0; transition: background .35s, box-shadow .35s, padding .35s;
+    }
+    #navbar.scrolled {
+      background: var(--navy); padding: .75rem 0;
+      box-shadow: 0 4px 24px rgba(13,31,60,.22);
+    }
+    #navbar .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
+      font-size: 1.25rem; color: #fff; text-decoration: none; line-height: 1;
+    }
+    .nav-logo span { color: var(--orange); }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,.85); text-decoration: none;
+      font-family: 'Montserrat', sans-serif; font-size: .88rem; font-weight: 600;
+      letter-spacing: .04em; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-cta { margin-left: 1.5rem; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: .3rem;
+    }
+    .hamburger span {
+      display: block; width: 26px; height: 2.5px;
+      background: #fff; border-radius: 2px; transition: all .3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      background: var(--navy); z-index: 999; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: #fff; text-decoration: none; font-family: 'Montserrat', sans-serif;
+      font-size: 1.6rem; font-weight: 800; letter-spacing: .04em; transition: color .2s;
+    }
+    .mobile-menu a:hover { color: var(--orange); }
+    .mobile-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: none; border: none; color: #fff; font-size: 1.8rem; cursor: pointer;
+    }
+
+    /* ── HERO ────────────────────────────────────── */
+    #hero {
+      min-height: 100vh; position: relative; display: flex; align-items: center;
+      background: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80') center/cover no-repeat;
+    }
+    #hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(120deg, rgba(13,31,60,.88) 55%, rgba(13,31,60,.55) 100%);
+    }
+    .hero-content { position: relative; z-index: 1; padding: 7rem 0 5rem; max-width: 680px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(244,124,32,.2); border: 1px solid rgba(244,124,32,.4);
+      color: #ffa84a; font-size: .78rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; padding: .4rem 1rem; border-radius: 50px; margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2.2rem, 5.5vw, 4rem); font-weight: 900;
+      color: #fff; line-height: 1.12; margin-bottom: 1.25rem;
+    }
+    .hero-title span { color: var(--orange); }
+    .hero-sub { font-size: 1.05rem; color: rgba(255,255,255,.8); line-height: 1.8; margin-bottom: 2.2rem; max-width: 520px; }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-stats {
+      position: relative; z-index: 1; margin-top: 3.5rem;
+      display: flex; gap: 2.5rem; flex-wrap: wrap;
+    }
+    .stat { color: #fff; }
+    .stat strong { display: block; font-family: 'Montserrat', sans-serif; font-size: 2rem; font-weight: 900; color: var(--orange); }
+    .stat span { font-size: .82rem; color: rgba(255,255,255,.7); }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .4rem;
+      color: rgba(255,255,255,.5); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; z-index: 1;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    /* ── ABOUT ───────────────────────────────────── */
+    #about { padding: 6rem 0; background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-img-wrap { position: relative; }
+    .about-img-wrap img {
+      width: 100%; height: 460px; object-fit: cover;
+      border-radius: var(--radius); box-shadow: var(--shadow-lg);
+    }
+    .about-badge {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--orange); color: #fff;
+      padding: 1.2rem 1.6rem; border-radius: var(--radius);
+      box-shadow: var(--shadow-lg); text-align: center;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .about-badge strong { display: block; font-size: 2rem; font-weight: 900; line-height: 1; }
+    .about-badge span { font-size: .8rem; font-weight: 600; opacity: .9; }
+    .about-checkmarks { margin-top: 1.8rem; display: flex; flex-direction: column; gap: .85rem; }
+    .check-item { display: flex; align-items: flex-start; gap: .75rem; }
+    .check-icon { width: 22px; height: 22px; border-radius: 50%; background: rgba(244,124,32,.12); flex-shrink: 0; display: grid; place-items: center; margin-top: .1rem; }
+    .check-icon i { color: var(--orange); font-size: .65rem; }
+    .check-item p { font-size: .92rem; color: var(--muted); line-height: 1.6; }
+    .check-item p strong { color: var(--text); }
+
+    /* ── SERVICES ────────────────────────────────── */
+    #services { padding: 6rem 0; background: var(--gray); }
+    .services-head { text-align: center; margin-bottom: 3.5rem; }
+    .services-head .section-sub { margin-inline: auto; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+    .service-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 2.2rem 1.8rem; box-shadow: var(--shadow);
+      transition: transform .3s, box-shadow .3s; position: relative; overflow: hidden;
+    }
+    .service-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; height: 4px;
+      width: 0; background: var(--orange); transition: width .35s;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .service-card:hover::after { width: 100%; }
+    .service-icon {
+      width: 58px; height: 58px; border-radius: 14px;
+      background: rgba(244,124,32,.1); display: grid; place-items: center; margin-bottom: 1.4rem;
+    }
+    .service-icon i { color: var(--orange); font-size: 1.35rem; }
+    .service-card h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.05rem; margin-bottom: .6rem; color: var(--navy); }
+    .service-card p { font-size: .88rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── WHY US ──────────────────────────────────── */
+    #why { padding: 6rem 0; background: var(--navy); }
+    .why-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .why-text .section-title { color: #fff; }
+    .why-text .section-sub { color: rgba(255,255,255,.65); }
+    .why-features { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.4rem; }
+    .feature-row { display: flex; gap: 1rem; }
+    .feat-num {
+      font-family: 'Montserrat', sans-serif; font-size: 2rem; font-weight: 900;
+      color: rgba(244,124,32,.25); line-height: 1; min-width: 48px;
+    }
+    .feat-body h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; color: #fff; margin-bottom: .3rem; }
+    .feat-body p { font-size: .87rem; color: rgba(255,255,255,.6); line-height: 1.7; }
+    .why-img img { width: 100%; height: 420px; object-fit: cover; border-radius: var(--radius); }
+
+    /* ── CTA BANNER ──────────────────────────────── */
+    #cta-banner {
+      padding: 5rem 0; text-align: center;
+      background: linear-gradient(135deg, var(--orange) 0%, #c95500 100%);
+    }
+    #cta-banner h2 {
+      font-family: 'Montserrat', sans-serif; font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 900; color: #fff; margin-bottom: .75rem;
+    }
+    #cta-banner p { color: rgba(255,255,255,.85); font-size: 1rem; margin-bottom: 2rem; }
+    #cta-banner .btn { background: #fff; color: var(--orange); }
+    #cta-banner .btn:hover { background: var(--navy); color: #fff; }
+
+    /* ── CONTACT ─────────────────────────────────── */
+    #contact { padding: 6rem 0; background: var(--white); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; }
+    .contact-info h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--navy); margin-bottom: 1rem; }
+    .contact-info p { font-size: .92rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
+    .contact-details { display: flex; flex-direction: column; gap: 1.2rem; }
+    .contact-row { display: flex; gap: 1rem; align-items: flex-start; }
+    .contact-icon { width: 44px; height: 44px; border-radius: 50%; background: rgba(244,124,32,.1); display: grid; place-items: center; flex-shrink: 0; }
+    .contact-icon i { color: var(--orange); }
+    .contact-row h5 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; color: var(--navy); }
+    .contact-row p { font-size: .88rem; color: var(--muted); margin-top: .15rem; }
+    .map-wrap { margin-top: 2rem; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .map-wrap iframe { width: 100%; height: 180px; border: none; display: block; }
+    .contact-form { background: var(--gray); padding: 2.5rem; border-radius: var(--radius); }
+    .contact-form h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--navy); margin-bottom: 1.5rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .45rem; margin-bottom: 1rem; }
+    .form-group label { font-size: .8rem; font-weight: 600; color: var(--navy); letter-spacing: .04em; font-family: 'Montserrat', sans-serif; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: .85rem 1rem; border: 2px solid var(--gray2); border-radius: 10px;
+      font-family: 'Poppins', sans-serif; font-size: .9rem; color: var(--text);
+      background: var(--white); transition: border-color .2s, box-shadow .2s; resize: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none; border-color: var(--orange);
+      box-shadow: 0 0 0 4px rgba(244,124,32,.12);
+    }
+    .form-group input.error,
+    .form-group textarea.error { border-color: #e53e3e; }
+    .error-msg { font-size: .76rem; color: #e53e3e; display: none; }
+    .form-group.has-error .error-msg { display: block; }
+    .form-success {
+      display: none; text-align: center; padding: 1.5rem;
+      background: rgba(72,187,120,.1); border-radius: 10px; color: #276749;
+      font-weight: 600;
+    }
+    .form-success i { font-size: 2rem; color: #48bb78; display: block; margin-bottom: .5rem; }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer { background: var(--navy2); padding: 4rem 0 2rem; }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 2.5rem; padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .footer-brand .nav-logo { display: inline-block; font-size: 1.35rem; margin-bottom: 1rem; }
+    .footer-brand p { font-size: .87rem; color: rgba(255,255,255,.5); line-height: 1.8; max-width: 300px; }
+    .footer-socials { display: flex; gap: .75rem; margin-top: 1.5rem; }
+    .footer-socials a {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(255,255,255,.07); display: grid; place-items: center;
+      color: rgba(255,255,255,.6); font-size: .9rem; text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .footer-socials a:hover { background: var(--orange); color: #fff; }
+    .footer-col h4 {
+      font-family: 'Montserrat', sans-serif; font-weight: 700;
+      font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.4); margin-bottom: 1.2rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col ul li a {
+      color: rgba(255,255,255,.65); text-decoration: none; font-size: .88rem; transition: color .2s;
+    }
+    .footer-col ul li a:hover { color: var(--orange); }
+    .footer-bottom {
+      padding-top: 2rem; display: flex;
+      justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom p { font-size: .82rem; color: rgba(255,255,255,.35); }
+    .footer-bottom a { color: var(--orange); text-decoration: none; }
+
+    /* ── SCROLL TO TOP ───────────────────────────── */
+    #scrollTop {
+      position: fixed; bottom: 2rem; right: 1.5rem;
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--orange); color: #fff; border: none;
+      font-size: 1.1rem; cursor: pointer; z-index: 999;
+      box-shadow: 0 4px 16px rgba(244,124,32,.4);
+      opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s;
+      display: grid; place-items: center;
+    }
+    #scrollTop.show { opacity: 1; pointer-events: auto; }
+    #scrollTop:hover { transform: translateY(-3px); }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 900px) {
+      .about-grid, .why-inner, .contact-grid { grid-template-columns: 1fr; }
+      .about-badge { right: 1rem; bottom: 1rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 680px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1.5rem; }
+      .stat strong { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="nav-logo">Buhay<span>Roofing</span></a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-primary nav-cta" style="padding:.65rem 1.4rem;font-size:.85rem;">
+      <i class="fa fa-phone"></i> Get a Quote
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose"><i class="fa fa-times"></i></button>
+  <a href="#home" class="mob-link">Home</a>
+  <a href="#about" class="mob-link">About</a>
+  <a href="#services" class="mob-link">Services</a>
+  <a href="#contact" class="mob-link">Contact</a>
+  <a href="#contact" class="btn btn-primary" style="margin-top:.5rem;">Get a Free Quote</a>
+</div>
+
+<!-- ═══════════════════════ HERO ══════════════════════════ -->
+<section id="home">
+  <div id="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge"><i class="fa fa-shield-halved"></i> #1 Trusted Roofing in Metro Manila</div>
+        <h1 class="hero-title">Reliable Roofing<br>Solutions You Can<br><span>Trust.</span></h1>
+        <p class="hero-sub">From roof installation to waterproofing — Buhay Roofing Solutions delivers top-quality craftsmanship at honest prices, proudly serving families and businesses across the Philippines.</p>
+        <div class="hero-buttons">
+          <a href="#contact" class="btn btn-primary"><i class="fa fa-clipboard-check"></i> Get Free Estimate</a>
+          <a href="#services" class="btn btn-outline"><i class="fa fa-list"></i> Our Services</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><strong>15+</strong><span>Years of Experience</span></div>
+          <div class="stat"><strong>2,000+</strong><span>Projects Completed</span></div>
+          <div class="stat"><strong>98%</strong><span>Client Satisfaction</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll Down</span>
+      <i class="fa fa-chevron-down"></i>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ ABOUT ═════════════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap fade-in">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80" alt="Roofing crew at work" loading="lazy" />
+        <div class="about-badge">
+          <strong>15+</strong>
+          <span>Years of<br>Excellence</span>
+        </div>
+      </div>
+      <div class="about-text fade-in">
+        <span class="section-label">About Buhay Roofing</span>
+        <h2 class="section-title">Your Trusted Roofing Partner Since 2009</h2>
+        <p class="section-sub">Founded in Manila, Buhay Roofing Solutions has grown from a small family enterprise into one of Metro Manila's most dependable roofing contractors. We understand the demands of the Philippine climate — from intense heat to powerful typhoons — and we build roofs that last.</p>
+        <div class="about-checkmarks">
+          <div class="check-item">
+            <div class="check-icon"><i class="fa fa-check"></i></div>
+            <p><strong>Licensed & Insured</strong> — PCAB-accredited contractors with full liability coverage for every project.</p>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fa fa-check"></i></div>
+            <p><strong>Typhoon-Proof Standards</strong> — All installations follow PAG-ASA wind-load guidelines for maximum durability.</p>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fa fa-check"></i></div>
+            <p><strong>Affordable & Transparent</strong> — No hidden fees. We give honest quotations upfront so you can plan with confidence.</p>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i class="fa fa-check"></i></div>
+            <p><strong>2-Year Workmanship Warranty</strong> — Every completed project is backed by our quality guarantee.</p>
+          </div>
+        </div>
+        <a href="#contact" class="btn btn-primary" style="margin-top:2rem;">Learn More About Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SERVICES ══════════════════════ -->
+<section id="services">
+  <div class="container">
+    <div class="services-head fade-in">
+      <span class="section-label">What We Offer</span>
+      <h2 class="section-title">Comprehensive Roofing Services</h2>
+      <p class="section-sub">From new builds to emergency repairs, our team of skilled roofers is equipped to handle any challenge — big or small.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-icon"><i class="fa fa-house"></i></div>
+        <h3>Roof Installation</h3>
+        <p>Complete new roof installations using premium materials — Corrugated G.I. sheets, long-span roofing, and clay tiles — built to withstand Philippine weather conditions.</p>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon"><i class="fa fa-screwdriver-wrench"></i></div>
+        <h3>Roof Repair</h3>
+        <p>Fast and reliable repairs for leaks, damaged panels, loose flashings, and storm damage. We respond within 24–48 hours for urgent situations.</p>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon"><i class="fa fa-magnifying-glass"></i></div>
+        <h3>Roof Inspection</h3>
+        <p>Thorough roof health assessments to identify weak points, potential leaks, and structural issues before they escalate — ideal before typhoon season.</p>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon"><i class="fa fa-droplet"></i></div>
+        <h3>Waterproofing</h3>
+        <p>Professional waterproofing solutions for flat roofs, concrete decks, and terraces using high-grade elastomeric coatings and membrane systems.</p>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon"><i class="fa fa-layer-group"></i></div>
+        <h3>Roof Insulation</h3>
+        <p>Reduce indoor heat and energy costs with our roof insulation services — keeping your home cooler during summer and protected during the rainy season.</p>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon"><i class="fa fa-building"></i></div>
+        <h3>Commercial Roofing</h3>
+        <p>Specialized roofing solutions for warehouses, commercial buildings, and industrial facilities. We handle large-scale projects with precision and efficiency.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ WHY US ════════════════════════ -->
+<section id="why">
+  <div class="container">
+    <div class="why-inner">
+      <div class="why-text fade-in">
+        <span class="section-label" style="background:rgba(244,124,32,.15); color:#ffa84a;">Why Choose Us</span>
+        <h2 class="section-title">Built for the Philippine Climate</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,.65);">We don't just build roofs — we build peace of mind. Every project we undertake is carried out with skill, integrity, and a commitment to your safety.</p>
+        <div class="why-features">
+          <div class="feature-row">
+            <div class="feat-num">01</div>
+            <div class="feat-body">
+              <h4>Rapid Emergency Response</h4>
+              <p>Typhoon damage? Sudden leaks? Our crews are on standby during storm season and can mobilize within hours across Metro Manila and nearby provinces.</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feat-num">02</div>
+            <div class="feat-body">
+              <h4>Certified & Experienced Team</h4>
+              <p>All our roofers are TESDA-certified and undergo regular safety training. We bring 15+ years of hands-on experience to every project.</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feat-num">03</div>
+            <div class="feat-body">
+              <h4>Premium Materials, Fair Prices</h4>
+              <p>We source high-grade roofing materials from accredited Philippine suppliers and pass the savings on to you — no middlemen, no markups.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-img fade-in">
+        <img src="https://images.unsplash.com/photo-1590012314607-cda9d9b699ae?w=900&q=80" alt="Roofing installation" loading="lazy" style="border-radius:var(--radius);" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CTA BANNER ════════════════════ -->
+<section id="cta-banner">
+  <div class="container fade-in">
+    <h2>Need Urgent Roof Repair?</h2>
+    <p>Don't wait for a small leak to become a costly disaster. Our team is ready to help — 7 days a week.</p>
+    <a href="#contact" class="btn"><i class="fa fa-phone"></i> Call Us Now: +63 917 123 4567</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CONTACT ═══════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:3.5rem;" class="fade-in">
+      <span class="section-label">Contact Us</span>
+      <h2 class="section-title">Get Your Free Estimate Today</h2>
+      <p class="section-sub" style="margin-inline:auto;">Fill out the form and our team will get back to you within 24 hours with a no-obligation quote.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info fade-in">
+        <h3>We'd Love to Hear From You</h3>
+        <p>Whether it's a minor repair or a full roof replacement, Buhay Roofing Solutions is here to help. Reach us through any of the channels below.</p>
+        <div class="contact-details">
+          <div class="contact-row">
+            <div class="contact-icon"><i class="fa fa-phone"></i></div>
+            <div>
+              <h5>Phone / Viber / WhatsApp</h5>
+              <p>+63 917 123 4567</p>
+              <p>+63 2 8888 9900</p>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon"><i class="fa fa-envelope"></i></div>
+            <div>
+              <h5>Email</h5>
+              <p>info@buhayroofing.ph</p>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon"><i class="fa fa-location-dot"></i></div>
+            <div>
+              <h5>Office Address</h5>
+              <p>45 Roofing Avenue, Barangay Bagong Ilog,<br>Pasig City, Metro Manila 1600</p>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon"><i class="fa fa-clock"></i></div>
+            <div>
+              <h5>Business Hours</h5>
+              <p>Mon–Sat: 7:00 AM – 6:00 PM</p>
+              <p>Sun: Emergency calls only</p>
+            </div>
+          </div>
+        </div>
+        <div class="map-wrap" style="margin-top:2rem;">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.8432219398937!2d121.06481061535407!3d14.574289881823066!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c80c8b5b7e47%3A0x3c42b8c4c0339d7b!2sPasig%2C%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1620000000000!5m2!1sen!2sph"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+      <div class="contact-form fade-in">
+        <h3>Send Us a Message</h3>
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group" id="fg-name">
+              <label for="fname">Full Name *</label>
+              <input type="text" id="fname" placeholder="Juan dela Cruz" />
+              <span class="error-msg">Please enter your full name.</span>
+            </div>
+            <div class="form-group" id="fg-phone">
+              <label for="fphone">Phone Number *</label>
+              <input type="tel" id="fphone" placeholder="+63 9XX XXX XXXX" />
+              <span class="error-msg">Enter a valid PH phone number.</span>
+            </div>
+          </div>
+          <div class="form-group" id="fg-email">
+            <label for="femail">Email Address *</label>
+            <input type="email" id="femail" placeholder="juan@email.com" />
+            <span class="error-msg">Enter a valid email address.</span>
+          </div>
+          <div class="form-group" id="fg-service">
+            <label for="fservice">Service Needed</label>
+            <select id="fservice">
+              <option value="">— Select a service —</option>
+              <option>Roof Installation</option>
+              <option>Roof Repair</option>
+              <option>Roof Inspection</option>
+              <option>Waterproofing</option>
+              <option>Roof Insulation</option>
+              <option>Commercial Roofing</option>
+              <option>Other / Not Sure</option>
+            </select>
+          </div>
+          <div class="form-group" id="fg-msg">
+            <label for="fmsg">Your Message *</label>
+            <textarea id="fmsg" rows="5" placeholder="Briefly describe your roofing concern or project…"></textarea>
+            <span class="error-msg">Please enter your message.</span>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
+            <i class="fa fa-paper-plane"></i> Send Message
+          </button>
+          <div class="form-success" id="formSuccess">
+            <i class="fa fa-circle-check"></i>
+            Thank you! Your message has been sent. We'll get back to you within 24 hours.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#home" class="nav-logo">Buhay<span>Roofing</span> Solutions</a>
+        <p>Your trusted roofing contractor in Metro Manila and nearby provinces. Quality workmanship. Honest pricing. Lasting results.</p>
+        <div class="footer-socials">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="#" aria-label="Viber"><i class="fab fa-viber"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#">Roof Installation</a></li>
+          <li><a href="#">Roof Repair</a></li>
+          <li><a href="#">Roof Inspection</a></li>
+          <li><a href="#">Waterproofing</a></li>
+          <li><a href="#">Commercial Roofing</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Buhay Roofing Solutions. All rights reserved.</p>
+      <p>Made with <span style="color:var(--orange)">♥</span> in Pasig City, Metro Manila</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll to Top Button -->
+<button id="scrollTop" aria-label="Scroll to top"><i class="fa fa-arrow-up"></i></button>
+
+<script>
+  // ── NAVBAR SCROLL ──────────────────────────────
+  const navbar = document.getElementById('navbar');
+  const scrollTopBtn = document.getElementById('scrollTop');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      navbar.classList.add('scrolled');
+      scrollTopBtn.classList.add('show');
+    } else {
+      navbar.classList.remove('scrolled');
+      scrollTopBtn.classList.remove('show');
+    }
+  });
+
+  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // ── HAMBURGER MENU ─────────────────────────────
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileClose = document.getElementById('mobileClose');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  const closeMenu = () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  mobileClose.addEventListener('click', closeMenu);
+  document.querySelectorAll('.mob-link').forEach(link => link.addEventListener('click', closeMenu));
+
+  // ── SMOOTH SCROLL FOR ALL NAV LINKS ───────────
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', e => {
+      const target = document.querySelector(anchor.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      const offset = navbar.offsetHeight + 16;
+      window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+    });
+  });
+
+  // ── INTERSECTION OBSERVER (fade-in) ───────────
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── FORM VALIDATION ────────────────────────────
+  const form = document.getElementById('contactForm');
+  const formSuccess = document.getElementById('formSuccess');
+
+  function setError(groupId, hasError) {
+    const group = document.getElementById(groupId);
+    group.classList.toggle('has-error', hasError);
+    const input = group.querySelector('input, textarea');
+    if (input) input.classList.toggle('error', hasError);
+  }
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function isValidPhone(phone) {
+    return /^(\+63|0)[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{4}$/.test(phone.replace(/\s/g, ''));
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name  = document.getElementById('fname').value.trim();
+    const phone = document.getElementById('fphone').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const msg   = document.getElementById('fmsg').value.trim();
+
+    const nameOk  = name.length >= 2;
+    const phoneOk = isValidPhone(phone);
+    const emailOk = isValidEmail(email);
+    const msgOk   = msg.length >= 10;
+
+    setError('fg-name',  !nameOk);
+    setError('fg-phone', !phoneOk);
+    setError('fg-email', !emailOk);
+    setError('fg-msg',   !msgOk);
+
+    if (nameOk && phoneOk && emailOk && msgOk) {
+      form.style.display = 'none';
+      formSuccess.style.display = 'block';
+    }
+  });
+
+  // Clear errors on input
+  ['fname','fphone','femail','fmsg'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+      const map = { fname:'fg-name', fphone:'fg-phone', femail:'fg-email', fmsg:'fg-msg' };
+      setError(map[id], false);
+    });
+  });
+</script>
+</body>
+</html>
